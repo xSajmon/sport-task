@@ -9,13 +9,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
-public class MatchService {
+public class EventService {
 
     private final ModelMapper modelMapper;
     private final JsonMapper mapper;
@@ -31,7 +30,7 @@ public class MatchService {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getCompetitorsNames(){
+    public List<String> getCompetitorNames(){
         return getEvents().stream().flatMap(event -> event.getCompetitors().stream())
                 .map(Competitor::getName)
                 .distinct()
