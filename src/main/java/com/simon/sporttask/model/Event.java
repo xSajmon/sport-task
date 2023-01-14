@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.DoubleStream;
 
 @Data
 public class Event {
@@ -19,4 +21,16 @@ public class Event {
     private Double probabilityDraw;
     @JsonProperty("probability_away_team_winner")
     private Double probabilityAwayWin;
+
+
+    public Double getMostLikelyResult(){
+        return DoubleStream.of(probabilityHomeWin, probabilityDraw, probabilityAwayWin).max().getAsDouble();
+    }
+
+    public Map<Integer, Double> getProbabilities(){
+        return Map.ofEntries(
+                Map.entry(0, probabilityHomeWin),
+                Map.entry(1, probabilityDraw),
+                Map.entry(2, probabilityAwayWin));
+    }
 }
