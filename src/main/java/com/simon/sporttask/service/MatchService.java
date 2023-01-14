@@ -1,18 +1,15 @@
 package com.simon.sporttask.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.simon.sporttask.model.Competitor;
 import com.simon.sporttask.model.Event;
 import com.simon.sporttask.model.EventDto;
 import com.simon.sporttask.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-
-import java.security.KeyStore;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -27,11 +24,18 @@ public class MatchService {
         return mapper.getDataFromJson();
     }
 
-    public List<EventDto> getTop10EventsByProbability(){
-        System.out.println();
+    public List<EventDto> getEventsByProbability(Long number){
         return getEvents().stream().sorted(Comparator.comparing(Event::getMostLikelyResult).reversed())
-                .limit(10)
+                .limit(number)
                 .map(element -> modelMapper.map(element, EventDto.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getCompetitorsNames(){
+        return getEvents().stream().flatMap(event -> event.getCompetitors().stream())
+                .map(Competitor::getName)
+                .distinct()
+                .sorted()
                 .collect(Collectors.toList());
     }
 }
