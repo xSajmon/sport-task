@@ -1,14 +1,23 @@
 package com.simon.sporttask.model;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.DoubleStream;
 
+
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Event {
     private ZonedDateTime startDate;
     private String sportName;
